@@ -22,7 +22,7 @@ export default function Add() {
       <Categories />
 
       <View style={styles.form}>
-        <Input placeholder="Nome" />
+        <Input placeholder="Nome" onChangeText={console.log}/>
         <Input placeholder="Url" />
         <Button title="Adicionar" />
       </View>
