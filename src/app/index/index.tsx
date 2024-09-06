@@ -5,6 +5,7 @@ import { colors } from '@/styles/colors'
 import { Category } from '@/components/category'
 import { categories } from '@/utils/categories'
 import { Categories } from '@/components/categories'
+import { Link } from '@/components/link'
 
 export default function Index() {
   return (
@@ -21,6 +22,12 @@ export default function Index() {
       </View>
 
       <Categories />
+
+      <Link 
+        name='Rocketseat'
+        url='https://www.rocketseat.com.br/'
+        onDetails={() => console.log('Clicou!')}
+      />
     </View>
   )
 }
