@@ -6,6 +6,13 @@ curso de react-native, alteração do  Async Storage para o Expo SQLite.
 
 UNIFEB - 
 
+ ```bash
+   npm install
+   ```
+ ```bash
+   npm install expo-sqlite
+   ```
+
 ## Autores. 
 
 # https://github.com/arthurrios
