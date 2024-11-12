@@ -7,44 +7,42 @@ import { Categories } from "@/components/categories";
 import { Input } from "@/components/input";
 import { Button } from "@/components/button";
 import { useState } from "react";
-import { linkStorage } from "@/storage/link-storage";
+import { useProductDatabase } from "@/app/database/useProductDatabase"; // Importe das funções CRUD do banco de dados
 
 export default function Add() {
-  const [category, setCategory] = useState("")
-  const [name, setName] = useState("")
-  const [url, setUrl] = useState("")
+  const [category, setCategory] = useState("");
+  const [name, setName] = useState("");
+  const [url, setUrl] = useState("");
+
+  const { create } = useProductDatabase(); // Função para criar um novo link no banco
 
   async function handleAdd() {
     try {
+      // Validações dos campos obrigatórios
       if (!category.trim()) {
-        return Alert.alert("Categoria", "Selecione a categoria")
+        return Alert.alert("Categoria", "Selecione a categoria");
       }
       if (!name.trim()) {
-        return Alert.alert("Nome", "Informe o nome")
+        return Alert.alert("Nome", "Informe o nome");
       }
       if (!url.trim()) {
-        return Alert.alert("URL", "Informe a URL")
+        return Alert.alert("URL", "Informe a URL");
       }
-  
-      await linkStorage.save({ 
-        id: new Date().getTime().toString(),
-        name,
-        url,
-        category,
-      })
+
+      // Adiciona o link no banco de dados SQLite
+      await create({ name, category, url }); 
 
       Alert.alert("Sucesso", "Novo link adicionado", [
         {
           text: "Ok", 
-          onPress: () => router.back()
+          onPress: () => router.back(),
         }
-      ])
+      ]);
     } catch (error) {
-      Alert.alert("Erro", "Não foi possível salvar o link")
-      console.log(error)     
+      Alert.alert("Erro", "Não foi possível salvar o link");
+      console.log(error);     
     }
   }
-
 
   return (
     <View style={styles.container}>
@@ -52,7 +50,6 @@ export default function Add() {
         <TouchableOpacity onPress={() => router.back()}>
           <MaterialIcons name="arrow-back" size={32} color={colors.gray[200]} />
         </TouchableOpacity>
-
         <Text style={styles.title}>Novo</Text>
       </View>
 
@@ -67,8 +64,8 @@ export default function Add() {
           autoCorrect={false} 
           autoCapitalize="none"
         />
-        <Button title="Adicionar" onPress={handleAdd}/>
+        <Button title="Adicionar" onPress={handleAdd} />
       </View>
     </View>
-  )
+  );
 }
